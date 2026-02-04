@@ -7,10 +7,15 @@ const Register = () => {
     password: ''
   })
 
+  const [success, setSuccess] = useState('')
+
+  const [error, setError] = useState("")
+
   const handleChange = e => setState(prev => ({...prev, [e.target.name]: e.target.value}))
 
   const handleSubmit = async e => {
     e.preventDefault()
+    setError('')
     try {
       const res = await fetch("/api/register", {
         method: "POST",
@@ -20,18 +25,20 @@ const Register = () => {
         }
       })
       if(!res.ok) {
-        console.log("error occured", await res.text())
+        const errorMsg = await res.text()
+        setError(JSON.parse(errorMsg)?.msg)
         return 
       }
       const data = await res.json()
       console.log("ok", data)
+      setSuccess(data?.msg)
       // console.log("response", await res.text())
     } catch (error) {
       console.log("error in registering user", error)
     }
   }
 
-  console.log("state", state)
+  console.log("state", state, error)
 
   return (
     <form onSubmit={handleSubmit} style={{
@@ -57,6 +64,8 @@ const Register = () => {
       <div>
         <button>Save</button>
       </div>
+      {error && <p style={{color: "red"}}>{error}</p>}
+      {success && <p style={{color: "green"}}>{success}</p>}
     </form>
   )
 }
