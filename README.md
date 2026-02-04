@@ -9,3 +9,5 @@ current features:
     * user role based auth middleware
 * frontend:
     * login and register page with link to backend
+
+week one done
