@@ -59,6 +59,7 @@ app.get("/", (req, res) => {
 })
 
 app.get("/admin-test", isAdmin, (req, res) => {
+    console.log(req.user)
     return res.status(200).send("hey this is admin route and you should be an admin, right ?")
 })
 
