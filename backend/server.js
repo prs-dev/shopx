@@ -10,7 +10,7 @@ const app = express()
 
 app.use(express.json())
 
-app.post('/register', async(req, res) => {
+app.post('/api/register', async(req, res) => {
     try {
         const {name, email, password, role} = req.body
         if(!name || !email || !password) {
@@ -18,6 +18,8 @@ app.post('/register', async(req, res) => {
                 msg: "Please provide all the fields!"
             })
         }
+        const userExists = await User.findOne({email})
+        if(userExists) return res.status(400).json({msg: "User already exists, log in"})
         const hashedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(12))
         const newUser = new User({
             name, email, password: hashedPassword, role
@@ -32,7 +34,7 @@ app.post('/register', async(req, res) => {
     }
 })
 
-app.post("/login", async(req, res) => {
+app.post("/api/login", async(req, res) => {
     try {
         const {email, password} = req.body
         if(!email || !password) return res.status(400).json({msg: 'Please provide all the fields!'})
