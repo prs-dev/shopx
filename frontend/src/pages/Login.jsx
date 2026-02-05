@@ -1,6 +1,9 @@
-import {useState} from 'react'
+import {useState, useContext} from 'react'
+import {UserContext} from '../context/UserContext'
 
 const Login = () => {
+  const {setToken} = useContext(UserContext)
+
   const [state, setState] = useState({
     name: "",
     email: "",
@@ -32,6 +35,7 @@ const Login = () => {
       const data = await res.json()
       console.log("ok", data)
       setSuccess(data?.msg)
+      setToken(data?.token)
       // console.log("response", await res.text())
     } catch (error) {
       console.log("error in login user", error)
