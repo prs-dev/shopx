@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const bcrypt = require("bcryptjs")
 const User = require("./models/User")
 const jwt = require("jsonwebtoken")
-const {isAdmin, isVendor} = require("./middlewares/roleAuth")
+const {isAdmin, isVendor, validToken} = require("./middlewares/roleAuth")
 require("dotenv").config()
 
 const app = express()
@@ -53,6 +53,15 @@ app.post("/api/login", async(req, res) => {
         })
     } catch (error) {
         console.log("error in login endpoint", error)
+    }
+})
+
+app.get('/api/user', validToken, async(req, res) => {
+    try {
+        const user = await User.findOne({_id: req.id}).select({password: 0})
+        return res.status(200).json({user})       
+    } catch (error) {
+        console.log("error in retrieving user info", error)
     }
 })
 

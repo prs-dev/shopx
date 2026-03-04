@@ -2,6 +2,18 @@ const User = require("../models/User")
 const jwt = require('jsonwebtoken')
 require("dotenv").config()
 
+const validToken = (req, res, next) => {
+    const token = req.headers.authorization.split(" ")[1]
+    // console.log("toke", token)
+    const details = jwt.verify(token, process.env.SECRET)
+    if(!details) return res.status(400).json({
+        msg: "invalid token"
+    })
+    req.id = details.id
+    // console.log("dte", details)
+    next()
+}
+
 const isAdmin = async(req, res, next) => {
     try {
         const token = req.headers?.authorization?.split(" ")[1]
@@ -37,5 +49,6 @@ const isVendor = async(req, res, next) => {
 
 module.exports = {
     isAdmin,
-    isVendor
+    isVendor,
+    validToken
 }

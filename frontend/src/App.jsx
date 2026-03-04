@@ -19,7 +19,6 @@ const App = () => {
     </div>
     <main style={{
       padding: "10px",
-      maxWidth: "1024px",
       margin: "0 auto"
     }}>
       <Routes>
