@@ -17,6 +17,11 @@ export const UserContextProvider = ({children}) => {
         }
     }, [token])
 
+    const logout = () => {
+        localStorage.removeItem("user-token")
+        setToken("")
+    }
+
     // useEffect(() => {
     //     const userToken = localStorage.getItem("user-token")
     //     setToken(userToken)
@@ -32,7 +37,7 @@ export const UserContextProvider = ({children}) => {
     //     }
     // }, [])
     // return <UserContext.Provider value={{test: "test"}}>
-    return <UserContext.Provider value={{token, setToken}}>
+    return <UserContext.Provider value={{token, setToken, logout}}>
         {children}
     </UserContext.Provider>
 }

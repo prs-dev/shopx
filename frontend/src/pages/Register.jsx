@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import { Link } from 'react-router-dom'
 
 const Register = () => {
   const [state, setState] = useState({
@@ -63,6 +64,9 @@ const Register = () => {
       </div>
       <div>
         <button>Save</button>
+      </div>
+      <div>
+        <p>Already registered ? <Link to='/login'>login</Link></p>
       </div>
       {error && <p style={{color: "red"}}>{error}</p>}
       {success && <p style={{color: "green"}}>{success}</p>}

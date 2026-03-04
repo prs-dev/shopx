@@ -1,5 +1,6 @@
 import {useState, useContext} from 'react'
 import {UserContext} from '../context/UserContext'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
   const {setToken} = useContext(UserContext)
@@ -63,6 +64,9 @@ const Login = () => {
       </div>
       <div>
         <button>Save</button>
+      </div>
+      <div>
+        <p>Not registered ? <Link to='/register'>click here</Link></p>
       </div>
       {error && <p style={{color: "red"}}>{error}</p>}
       {success && <p style={{color: "green"}}>{success}</p>}
