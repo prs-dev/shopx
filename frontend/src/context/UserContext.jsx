@@ -40,7 +40,7 @@ export const UserContextProvider = ({children}) => {
                 })
                 if(res.ok) {
                     const data = await res.json()
-                    setUser(data)
+                    setUser(data?.user)
                     // console.log("data", data)
                 }
             } catch (error) {

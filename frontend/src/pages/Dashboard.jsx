@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Dashboard = () => {
+const Dashboard = ({role}) => {
   return (
-    <div>Dashboard</div>
+    <div>{role} Dashboard</div>
   )
 }
 
