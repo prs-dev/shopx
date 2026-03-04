@@ -6,16 +6,17 @@ import {UserContext} from './context/UserContext'
 import Homepage from './pages/Homepage'
 import Navbar from './components/Navbar'
 import { useNavigate } from 'react-router-dom'
+import VendorRegister from './pages/VendorRegister'
 
 const App = () => {
-  const {token, logout} = useContext(UserContext)
+  const {token, logout, user} = useContext(UserContext)
   // console.log("user", user.test)
   console.log("token-true", token)
   const navigate = useNavigate()
   return (
     <div>
       <div>
-      <Navbar logout={logout} navigate={navigate}/>
+      <Navbar logout={logout} navigate={navigate} user={user}/>
     </div>
     <main style={{
       padding: "10px",
@@ -26,6 +27,7 @@ const App = () => {
       <Route path="/" element={token ? <Homepage /> : <Register />} />
       <Route path="/register" element={token ? <Homepage /> : <Register />} />
       <Route path='/login' element={token ? <Homepage /> : <Login />} />
+      <Route path='/vendor' element={<VendorRegister />} />
     </Routes>
     </main>
     </div>

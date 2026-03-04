@@ -8,7 +8,9 @@ export const UserContextProvider = ({children}) => {
        return userToken
     })
     const [user, setUser] = useState(null)
-    console.log("userToken", token)
+    const [loading, setLoading] = useState(false) //for future use
+
+    // console.log("userToken", token)
 
     useEffect(() => {
         if(token && token.length > 0) {
@@ -21,6 +23,7 @@ export const UserContextProvider = ({children}) => {
     const logout = () => {
         localStorage.removeItem("user-token")
         setToken("")
+        setUser(null)
     }
 
     // useEffect(() => {

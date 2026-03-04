@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Navbar = ({logout, navigate}) => {
+const Navbar = ({ logout, navigate, user }) => {
     return (
         <nav style={{
             display: 'flex',
@@ -23,9 +23,22 @@ const Navbar = ({logout, navigate}) => {
                 listStyle: "none",
                 cursor: "pointer"
             }}>
-                <li onClick={() => navigate("/register")}>Register</li>
-                <li onClick={() => navigate("/login")}>Login</li>
-                <li onClick={logout}>Logout</li>
+                {user && user.role !== 'vendor' ? <>
+                    <li>
+                        <span style={{
+                            fontWeight: '700',
+                            border: "1px solid white",
+                            padding: "5px",
+                            borderRadius: "5px"
+                        }}>Become a vendor</span>
+                    </li>
+                    <li>Welcome {user?.name}</li>
+                    <li onClick={logout}>Logout</li>
+                </> : <>
+                    <li onClick={() => navigate("/register")}>Register</li>
+                    <li onClick={() => navigate("/login")}>Login</li>
+                </>}
+
             </ul>
         </nav>
     )
