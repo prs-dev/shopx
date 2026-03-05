@@ -2,24 +2,25 @@ const express = require("express")
 const mongoose = require('mongoose')
 const bcrypt = require("bcryptjs")
 const User = require("./models/User")
+const Vendor = require("./models/Vendor")
 const jwt = require("jsonwebtoken")
-const {isAdmin, isVendor, validToken} = require("./middlewares/roleAuth")
+const { isAdmin, isVendor, validToken } = require("./middlewares/roleAuth")
 require("dotenv").config()
 
 const app = express()
 
 app.use(express.json())
 
-app.post('/api/register', async(req, res) => {
+app.post('/api/register', async (req, res) => {
     try {
-        const {name, email, password, role} = req.body
-        if(!name || !email || !password) {
+        const { name, email, password, role } = req.body
+        if (!name || !email || !password) {
             return res.status(400).json({
                 msg: "Please provide all the fields!"
             })
         }
-        const userExists = await User.findOne({email})
-        if(userExists) return res.status(400).json({msg: "User already exists, log in"})
+        const userExists = await User.findOne({ email })
+        if (userExists) return res.status(400).json({ msg: "User already exists, log in" })
         const hashedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(12))
         const newUser = new User({
             name, email, password: hashedPassword, role
@@ -34,19 +35,19 @@ app.post('/api/register', async(req, res) => {
     }
 })
 
-app.post("/api/login", async(req, res) => {
+app.post("/api/login", async (req, res) => {
     try {
-        const {email, password} = req.body
-        if(!email || !password) return res.status(400).json({msg: 'Please provide all the fields!'})
-        const user = await User.findOne({email})
-        if(!user) return res.status(404).json({
+        const { email, password } = req.body
+        if (!email || !password) return res.status(400).json({ msg: 'Please provide all the fields!' })
+        const user = await User.findOne({ email })
+        if (!user) return res.status(404).json({
             msg: "user not found!"
         })
         const comparePassword = bcrypt.compareSync(password, user.password)
-        if(!comparePassword) return res.status(400).json({
+        if (!comparePassword) return res.status(400).json({
             msg: "invalid credentials!"
         })
-        const token = jwt.sign({id: user._id, role: user.role}, process.env.SECRET)
+        const token = jwt.sign({ id: user._id, role: user.role }, process.env.SECRET)
         return res.status(200).json({
             msg: "signed in successfully",
             token
@@ -56,12 +57,30 @@ app.post("/api/login", async(req, res) => {
     }
 })
 
-app.get('/api/user', validToken, async(req, res) => {
+app.get('/api/user', validToken, async (req, res) => {
     try {
-        const user = await User.findOne({_id: req.id}).select({password: 0})
-        return res.status(200).json({user})       
+        const user = await User.findOne({ _id: req.id }).select({ password: 0 })
+        return res.status(200).json({ user })
     } catch (error) {
         console.log("error in retrieving user info", error)
+    }
+})
+
+app.post('/api/vendor/create', validToken, async (req, res) => {
+    try {
+        const { name, description } = req.body
+        if (name || description) return res.status(400).json({ msg: "please provide all fields!" })
+        const vendorExists = await Vendor.findOne({ user: req.id })
+        if (vendorExists) return res.status(400).json({ msg: "You already submitted the request!" })
+        const newVendor = new Vendor({
+            name, description, user: req.id
+        })
+        await newVendor.save()
+        return res.status(201).json({
+            msg: "Your vendor request has been submitted!"
+        })
+    } catch (error) {
+        console.log("error while creating vendor", error)
     }
 })
 

@@ -27,7 +27,8 @@ const App = () => {
       <Route path="/" element={token ? <Homepage /> : <Register />} />
       <Route path="/register" element={token ? <Homepage /> : <Register />} />
       <Route path='/login' element={token ? <Homepage /> : <Login />} />
-      <Route path='/vendor' element={<VendorRegister />} />
+      <Route path='/vendor/new' element={token ? <VendorRegister token={token}/> : <Login />} />
+      <Route path='/vendor' element={token ? <Homepage /> : <Login />} />
     </Routes>
     </main>
     </div>

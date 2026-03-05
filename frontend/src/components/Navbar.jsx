@@ -24,7 +24,7 @@ const Navbar = ({ logout, navigate, user }) => {
                 cursor: "pointer"
             }}>
                 {user && user.role !== 'vendor' ? <>
-                    <li>
+                    <li onClick={() => navigate('/vendor/new')}>
                         <span style={{
                             fontWeight: '700',
                             border: "1px solid white",
