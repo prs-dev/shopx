@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import useNavigate from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 const VendorRegister = ({token}) => {
   const [state, setState] = useState(null)
@@ -14,10 +14,10 @@ const VendorRegister = ({token}) => {
     e.preventDefault()
     try {
       const res = await fetch('/api/vendor/create', {
-        method: 'post',
+        method: 'POST',
+        body: JSON.stringify(state),
         headers: {
           "content-type": "application/json",
-          body: JSON.stringify(state),
           authorization: `Bearer ${token}`
         }
       })
