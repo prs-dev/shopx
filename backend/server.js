@@ -88,6 +88,16 @@ app.post('/api/vendor/create', validToken, async (req, res) => {
     }
 })
 
+app.get('/api/vendor', validToken, isVendor, async(req, res) => {
+    try {
+        console.log("user", req.user)
+        const vendorData = await Vendor.findOne({user: req.user._id})
+        return res.json({msg: "vendor data", vendor: vendorData})
+    } catch (error) {
+        console.log("error in vendor data fetching", error)
+    }
+})
+
 app.get("/", (req, res) => {
     res.send("<h1>hello</h1>")
 })

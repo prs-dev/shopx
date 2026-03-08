@@ -23,15 +23,15 @@ const Navbar = ({ logout, navigate, user }) => {
                 listStyle: "none",
                 cursor: "pointer"
             }}>
-                {user && user.role !== 'vendor' ? <>
-                    <li onClick={() => navigate('/vendor/new')}>
+                {user ? <>
+                    {user.role !== "vendor" && <li onClick={() => navigate('/vendor/new')}>
                         <span style={{
                             fontWeight: '700',
                             border: "1px solid white",
                             padding: "5px",
                             borderRadius: "5px"
                         }}>Become a vendor</span>
-                    </li>
+                    </li>}
                     <li>Welcome {user?.name}</li>
                     <li onClick={logout}>Logout</li>
                 </> : <>

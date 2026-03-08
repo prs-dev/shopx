@@ -1,8 +1,15 @@
 import React from 'react'
 
 const Dashboard = ({role}) => {
-  return (
-    <div>{role} Dashboard</div>
+  if (role === "admin") return (
+    <div>
+      admin
+    </div>
+  )
+  if (role === "vendor") return (
+    <div>
+      vendor
+    </div>
   )
 }
 

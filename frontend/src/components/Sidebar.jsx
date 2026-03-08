@@ -1,8 +1,15 @@
 import React from 'react'
 
-const Sidebar = () => {
-  return (
-    <div>Sidebar</div>
+const Sidebar = ({role}) => {
+  if(role === "admin") return (
+    <div>
+      admin
+    </div>
+  )
+  if(role === 'vendor') return (
+    <div>
+      vendor
+    </div>
   )
 }
 

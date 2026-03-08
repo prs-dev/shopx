@@ -23,7 +23,7 @@ const isAdmin = async(req, res, next) => {
         if(!user) return res.status(400).json({msg: "Invalid token!"})
         if(user.role !== "admin") return res.status(401).json({msg: "You are not authorized!"})
         req.user = user
-        console.log("token", token, userDetails)
+        // console.log("token", token, userDetails)
         next()
     } catch (error) {
         console.log("error in admin auth middleware", error)
@@ -33,14 +33,12 @@ const isAdmin = async(req, res, next) => {
 
 const isVendor = async(req, res, next) => {
     try {
-        const token = req.headers?.authorization?.split(" ")[1]
-        const userDetails = jwt.verify(token, process.env.SECRET)
-        const userId = userDetails.id 
+        const userId = req.id
         const user = await User.findOne({_id: userId})
         if(!user) return res.status(400).json({msg: "Invalid token!"})
         if(user.role === "user") return res.status(401).json({msg: "You are not authorized!"})
         req.user = user
-        console.log("token", token, userDetails)
+        // console.log("token", token, userDetails)
         next()
     } catch (error) {
         console.log("error in vendor auth middleware", error)

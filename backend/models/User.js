@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ["user", "admin", "vendor"],
         default: "user"
+    },
+    vendorId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Vendor"
     }
 }, {
     timestamps: true
