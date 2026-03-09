@@ -7,6 +7,7 @@ import Homepage from './pages/Homepage'
 import Navbar from './components/Navbar'
 import { useNavigate } from 'react-router-dom'
 import VendorRegister from './pages/VendorRegister'
+import { useState } from 'react'
 
 const App = () => {
   const {token, logout, user} = useContext(UserContext)
@@ -19,7 +20,7 @@ const App = () => {
       <Navbar logout={logout} navigate={navigate} user={user}/>
     </div>
     <main style={{
-      padding: "10px",
+      // padding: "10px",
       margin: "0 auto"
     }}>
       <Routes>

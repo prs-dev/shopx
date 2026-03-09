@@ -1,11 +1,12 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import Dashboard from '../pages/Dashboard'
 import { UserContext } from '../context/UserContext'
 import Profile from './Profile'
 
 const Homepage = () => {
-  const { user } = useContext(UserContext)
+  const { user, token } = useContext(UserContext)
+   const [layout, setLayout] = useState(null)
   console.log(user)
   return (
     <div style={{
@@ -13,10 +14,10 @@ const Homepage = () => {
     }}>
       {user?.role === "admin" || user?.role === "vendor" ? <>
         <div>
-          <Sidebar role={user?.role} />
+          <Sidebar {...{setLayout, layout}} role={user?.role} />
         </div>
         <div>
-          <Dashboard role={user?.role} />
+          <Dashboard {...{setLayout, layout, token}} role={user?.role} />
         </div>
       </> : <Profile />}
     </div>
