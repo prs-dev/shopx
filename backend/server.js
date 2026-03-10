@@ -111,6 +111,27 @@ app.get("/api/admin/vendor/requests",validToken, isAdmin, async(req, res) => {
     res.send("here in vendor request")
 })
 
+app.post("/api/admin/vendor/:vendorId", validToken, isAdmin, async(req, res) => {
+    try {
+        const vendorId = req.params.vendorId
+        const {status} = req.body
+        const vendor = await Vendor.findById(vendorId)
+        const user = await User.findById(vendor.user)
+        if(status === 'approved') {
+            user.vendorId = vendorId
+            user.role = "vendor"
+            vendor.status = "approved"
+            await user.save()
+            await vendor.save()
+            return res.status(200).json({success: true, msg: "operations completed"})
+        }
+        return res.status(400).json({success: false, msg: "please approve the vendor first"})
+        // console.log("vendor", vendor, user)
+    } catch (error) {
+        console.log("error in updating vendor status", error)
+    }
+})
+
 app.get("/", (req, res) => {
     res.send("<h1>hello</h1>")
 })
