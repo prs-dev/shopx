@@ -1,5 +1,6 @@
 const User = require("../models/User")
 const jwt = require('jsonwebtoken')
+const Vendor = require("../models/Vendor")
 require("dotenv").config()
 
 const validToken = (req, res, next) => {
@@ -16,9 +17,7 @@ const validToken = (req, res, next) => {
 
 const isAdmin = async(req, res, next) => {
     try {
-        const token = req.headers?.authorization?.split(" ")[1]
-        const userDetails = jwt.verify(token, process.env.SECRET)
-        const userId = userDetails.id 
+        const userId = req.id //user id
         const user = await User.findOne({_id: userId})
         if(!user) return res.status(400).json({msg: "Invalid token!"})
         if(user.role !== "admin") return res.status(401).json({msg: "You are not authorized!"})
@@ -33,7 +32,7 @@ const isAdmin = async(req, res, next) => {
 
 const isVendor = async(req, res, next) => {
     try {
-        const userId = req.id
+        const userId = req.id //user id
         const user = await User.findOne({_id: userId})
         if(!user) return res.status(400).json({msg: "Invalid token!"})
         if(user.role === "user") return res.status(401).json({msg: "You are not authorized!"})

@@ -98,6 +98,19 @@ app.get('/api/vendor', validToken, isVendor, async(req, res) => {
     }
 })
 
+app.get("/api/admin/vendor/requests",validToken, isAdmin, async(req, res) => {
+    //will check for vendor requests, edit role for vendor and change it to vendor and edit vendorId for user and fill that
+    //list all vendors with pending status
+    try {
+        const vendors = await Vendor.find({status: "pending"})
+        return res.status(200).json({success: true, vendors})
+        console.log("vendors", vendors) 
+    } catch (error) {
+        console.log("error in admin vendor request", error)
+    }
+    res.send("here in vendor request")
+})
+
 app.get("/", (req, res) => {
     res.send("<h1>hello</h1>")
 })
