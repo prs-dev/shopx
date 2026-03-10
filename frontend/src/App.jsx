@@ -25,11 +25,13 @@ const App = () => {
     }}>
       <Routes>
       {/* <Register /> */}
-      <Route path="/" element={token ? <Homepage /> : <Register />} />
-      <Route path="/register" element={token ? <Homepage /> : <Register />} />
-      <Route path='/login' element={token ? <Homepage /> : <Login />} />
+      <Route path="/" element={token ? <Homepage role={user?.role}/> : <Register />} />
+      <Route path="/register" element={token ? <Homepage role={user?.role}/> : <Register />} />
+      <Route path='/login' element={token ? <Homepage role={user?.role}/> : <Login />} />
       <Route path='/vendor/new' element={token ? <VendorRegister token={token}/> : <Login />} />
-      <Route path='/vendor' element={token ? <Homepage /> : <Login />} />
+      <Route path='/vendor' element={token && user?.role === "vendor" ? <Homepage role={"vendor"}/> : <Login />} />
+      <Route path='/admin' element={token && user?.role === "admin" ? <Homepage role={"admin"}/> : <Login />} />
+      <Route path='/admin/vendor/requests' element={token && user?.role === "admin" ? <Homepage role={"admin"}/> : <Login />} />
     </Routes>
     </main>
     </div>

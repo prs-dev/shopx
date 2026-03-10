@@ -3,23 +3,25 @@ import Sidebar from '../components/Sidebar'
 import Dashboard from '../pages/Dashboard'
 import { UserContext } from '../context/UserContext'
 import Profile from './Profile'
+import { Navigate } from 'react-router-dom'
 
-const Homepage = () => {
+const Homepage = ({role}) => {
   const { user, token } = useContext(UserContext)
-   const [layout, setLayout] = useState(null)
-  console.log(user)
+  //  const [layout, setLayout] = useState(null) //need to change to routes, this is not good
+  // console.log("test", user, role)
   return (
     <div style={{
       display: "flex"
     }}>
-      {user?.role === "admin" || user?.role === "vendor" ? <>
+      {role === "admin" || role === "vendor" ? <>
         <div>
-          <Sidebar {...{setLayout, layout}} role={user?.role} />
+          <Sidebar role={role} />
         </div>
         <div>
-          <Dashboard {...{setLayout, layout, token}} role={user?.role} />
+          {/* <Dashboard {...{setLayout, layout, token}} role={role} /> */}
+          <Dashboard role={role} token={token}/>
         </div>
-      </> : <Profile />}
+      </> : <Profile user={user}/>}
     </div>
   )
 }

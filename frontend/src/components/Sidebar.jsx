@@ -1,7 +1,8 @@
-import React from 'react'
+import { useNavigate } from "react-router-dom"
 
-const Sidebar = ({role, layout, setLayout}) => {
+const Sidebar = ({role}) => {
   // console.log("layout", layout, setLayout)
+  const navigate = useNavigate()
   if(role === "admin") return (
     <div style={{
       width: "200px",
@@ -11,7 +12,8 @@ const Sidebar = ({role, layout, setLayout}) => {
       padding: "10px"
     }}>
       <ul>
-        <li onClick={() => setLayout("admin-vendor")}>
+        {/* <li onClick={() => setLayout("admin-vendor")}> */}
+        <li onClick={() => navigate('/admin/vendor/requests')}>
           Vendor Requests
         </li>
       </ul>
