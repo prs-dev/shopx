@@ -5,7 +5,7 @@ const VendorSchema = new mongoose.Schema({
     description: String,
     status: {
         type: String,
-        enum: ['pending', 'approved'],
+        enum: ['pending', 'approved', 'rejected'],
         default: "pending"
     }, 
     user: {

@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom'
 
 const VendorRegister = ({token}) => {
   const [state, setState] = useState(null)
+  const [error, setError] = useState(null)
   const navigate = useNavigate()
   const handleChange = (e) => {
     setState(prev => ({
@@ -23,7 +24,9 @@ const VendorRegister = ({token}) => {
       })
       if(res.ok) {
         console.log("vendor created", await res.json())
-        navigate('/vendor')
+        navigate('/')
+      } else {
+        console.log("error", res)
       }
     } catch (error) {
       console.log("error in new vendor creation", error)
