@@ -8,31 +8,56 @@ const Dashboard = ({ role, token }) => {
   const location = useLocation()
   const [pendingVendors, setPendingVendors] = useState(null)
   const [activeVendor, setActiveVendor] = useState(null)
+  const [vendorData, setVendorData] = useState(null)
+
+  const fetchPendingVendors = async () => {
+    try {
+      const res = await fetch('/api/admin/vendor/requests', {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      })
+      if (res.ok) {
+        const data = await res.json()
+        setPendingVendors(data?.vendors)
+        // console.log("testes", data)
+        // console.log(await res.json())
+      }
+    } catch (error) {
+      console.log("error in fetching vendor data", error)
+    }
+  }
+
+  const fetchVendorData = async() => {
+    try {
+      const res = await fetch('/api/vendor', {
+        method: "get",
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      })
+      if(res.ok) {
+        const data = await res.json()
+        setVendorData(data)
+      }
+    } catch (error) {
+      console.log("error in fetching vendor data")
+    }
+  }
 
   useEffect(() => {
-    const fetchVendorData = async () => {
-      try {
-        const res = await fetch('/api/admin/vendor/requests', {
-          headers: {
-            authorization: `Bearer ${token}`
-          }
-        })
-        if (res.ok) {
-          const data = await res.json()
-          setPendingVendors(data?.vendors)
-          // console.log("testes", data)
-          // console.log(await res.json())
-        }
-      } catch (error) {
-        console.log("error in fetching vendor data", error)
-      }
-    }
     if (role === 'admin' && token) {
+      fetchPendingVendors()
+    }
+  }, [role])
+
+  useEffect(() => {
+    if (role === 'vendor' && token) {
       fetchVendorData()
     }
   }, [role])
 
-  const handleApprove = async() => {
+  const handleApprove = async () => {
     try {
       const res = await fetch(`/api/admin/vendor/${activeVendor}`, {
         method: "post",
@@ -44,7 +69,7 @@ const Dashboard = ({ role, token }) => {
           "content-type": "application/json"
         }
       })
-      if(res.ok) {
+      if (res.ok) {
         console.log("vendor approved")
         setActiveVendor(null)
       }
@@ -57,7 +82,7 @@ const Dashboard = ({ role, token }) => {
   // console.log("testing", location.pathname.includes("/vendor/request"))
   if (role === "admin") return (
     <div>
-      {location.pathname.includes("/vendor/request") && <div style={{padding: "10px", display: "flex", gap: "10px"}}>
+      {location.pathname.includes("/vendor/request") && <div style={{ padding: "10px", display: "flex", gap: "10px" }}>
         {pendingVendors?.map(item =>
           <div style={{
             width: "200px",
@@ -74,12 +99,16 @@ const Dashboard = ({ role, token }) => {
           // in future implement a table to list all requests
         )}
       </div>}
-      {activeVendor && <Dialog close={setActiveVendor} accept={handleApprove}/>}
+      {activeVendor && <Dialog close={setActiveVendor} accept={handleApprove} />}
     </div>
   )
   if (role === "vendor") return (
     <div>
-      vendor
+      vendor hun main
+      <div>
+        <p>Name: {vendorData?.vendor?.name}</p>
+        <p>Description: {vendorData?.vendor?.description}</p>
+      </div>
     </div>
   )
 }
