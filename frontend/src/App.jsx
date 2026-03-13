@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import VendorRegister from './pages/VendorRegister'
 import { useState } from 'react'
 import Layout from './Layout/Layout'
+import VendorProtectedRoute from './Layout/VendorProtectedRoute'
 
 const App = () => {
   const { token, logout, user } = useContext(UserContext)
@@ -30,7 +31,10 @@ const App = () => {
       <Route path="/register" element={token ? <Homepage role={user?.role}/> : <Register />} />
       <Route path='/login' element={token ? <Homepage role={user?.role}/> : <Login />} />
       <Route path='/vendor/new' element={token ? <VendorRegister token={token}/> : <Login />} />
-      <Route path='/vendor' element={token && user?.role === "vendor" ? <Homepage role={"vendor"}/> : <Login />} />
+      {/* <Route path='/vendor' element={token && user?.role === "vendor" ? <Homepage role={"vendor"}/> : <Login />} /> */}
+      <Route element={<VendorProtectedRoute />}>
+        <Route path='/vendor' element={<Homepage role={'vendor'}/>} />
+      </Route>
       <Route path='/admin' element={token && user?.role === "admin" ? <Homepage role={"admin"}/> : <Login />} />
       <Route path='/admin/vendor/requests' element={token && user?.role === "admin" ? <Homepage role={"admin"}/> : <Login />} />
     </Routes>

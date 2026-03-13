@@ -7,7 +7,9 @@ export const UserContextProvider = ({children}) => {
         const userToken = localStorage.getItem("user-token")
        return userToken
     })
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(() => {
+            return JSON.parse(localStorage.getItem("user"))
+    })
     const [loading, setLoading] = useState(false) //for future use
 
     // console.log("userToken", token)
@@ -44,6 +46,7 @@ export const UserContextProvider = ({children}) => {
                 if(res.ok) {
                     const data = await res.json()
                     setUser(data?.user)
+                    localStorage.setItem("user", JSON.stringify(data.user))
                     // console.log("data", data)
                 }
             } catch (error) {
@@ -51,6 +54,14 @@ export const UserContextProvider = ({children}) => {
             }
         }
         if(token) fetchUser()
+    }, [token])
+
+    useEffect(() => {
+        if(token && token.length > 0) {
+            localStorage.setItem("user", user)
+        } else {
+            localStorage.removeItem('user')
+        }
     }, [token])
     // return <UserContext.Provider value={{test: "test"}}>
     return <UserContext.Provider value={{token, setToken, logout, user}}>
