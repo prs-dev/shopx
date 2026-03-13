@@ -10,6 +10,7 @@ import VendorRegister from './pages/VendorRegister'
 import { useState } from 'react'
 import Layout from './Layout/Layout'
 import VendorProtectedRoute from './Layout/VendorProtectedRoute'
+import AdminProtectedRoute from './Layout/AdminProtectedRoute'
 
 const App = () => {
   const { token, logout, user } = useContext(UserContext)
@@ -35,8 +36,12 @@ const App = () => {
       <Route element={<VendorProtectedRoute />}>
         <Route path='/vendor' element={<Homepage role={'vendor'}/>} />
       </Route>
-      <Route path='/admin' element={token && user?.role === "admin" ? <Homepage role={"admin"}/> : <Login />} />
-      <Route path='/admin/vendor/requests' element={token && user?.role === "admin" ? <Homepage role={"admin"}/> : <Login />} />
+      <Route element={<AdminProtectedRoute />}>
+        <Route path='/admin' element={<Homepage role="admin" />} />
+        <Route path='/admin/vendor/requests' element={<Homepage role="admin" />} />
+      </Route>
+      {/* <Route path='/admin' element={token && user?.role === "admin" ? <Homepage role={"admin"}/> : <Login />} />
+      <Route path='/admin/vendor/requests' element={token && user?.role === "admin" ? <Homepage role={"admin"}/> : <Login />} /> */}
     </Routes>
     </main>
     </div>
