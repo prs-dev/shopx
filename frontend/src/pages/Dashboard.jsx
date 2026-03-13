@@ -59,7 +59,7 @@ const Dashboard = ({ role, token }) => {
 
   const handleApprove = async () => {
     try {
-      const res = await fetch(`/api/admin/vendor/${activeVendor}`, {
+      const res = await fetch(`/api/admin/vendor/${activeVendor.id}`, {
         method: "post",
         body: JSON.stringify({
           status: "approved"
@@ -78,6 +78,27 @@ const Dashboard = ({ role, token }) => {
     }
   }
 
+  const handleReject = async () => {
+    try {
+      const res = await fetch(`/api/admin/vendor/${activeVendor.id}`, {
+        method: "post",
+        body: JSON.stringify({
+          status: "rejected"
+        }),
+        headers: {
+          authorization: `Bearer ${token}`,
+          "content-type": "application/json"
+        }
+      })
+      if (res.ok) {
+        console.log("vendor rejected")
+        setActiveVendor(null)
+      }
+    } catch (error) {
+      console.log("error in rejecting vendor", error)
+    }
+  }
+
   // console.log("admin", role, token)
   // console.log("testing", location.pathname.includes("/vendor/request"))
   if (role === "admin") return (
@@ -93,13 +114,13 @@ const Dashboard = ({ role, token }) => {
             <p>Name: {item.name}</p>
             <p>Description: {item.description}</p>
             <p>Status: {item.status}</p>
-            <button onClick={() => setActiveVendor(item._id)}>Approve Request</button>
-            <button>Reject Request</button>
+            <button onClick={() => setActiveVendor({id: item._id, status: "approved"})}>Approve Request</button>
+            <button onClick={() => setActiveVendor({id: item._id, status: "rejected"})}>Reject Request</button>
           </div>
           // in future implement a table to list all requests
         )}
       </div>}
-      {activeVendor && <Dialog close={setActiveVendor} accept={handleApprove} />}
+      {activeVendor && <Dialog close={setActiveVendor} operation={activeVendor.status === "approved" ? handleApprove : handleReject}/>}
     </div>
   )
   if (role === "vendor") return (

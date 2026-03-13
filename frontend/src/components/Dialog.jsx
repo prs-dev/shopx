@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Dialog = ({close, accept}) => {
+const Dialog = ({close, operation}) => {
     return (
         <div style={{
             display: "flex",
@@ -32,7 +32,7 @@ const Dialog = ({close, accept}) => {
                 }}>
                     <button style={{
                         padding: "10px"
-                    }} onClick={accept}>Yes</button>
+                    }} onClick={operation}>Yes</button>
                     <button style={{
                         padding: "10px"
                     }} onClick={() => close(null)}>No</button>
