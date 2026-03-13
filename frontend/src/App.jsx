@@ -1,16 +1,17 @@
 import Login from './pages/Login'
 import Register from './pages/Register'
-import {Routes, Route} from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { useContext } from 'react'
-import {UserContext} from './context/UserContext'
+import { UserContext } from './context/UserContext'
 import Homepage from './pages/Homepage'
 import Navbar from './components/Navbar'
 import { useNavigate } from 'react-router-dom'
 import VendorRegister from './pages/VendorRegister'
 import { useState } from 'react'
+import Layout from './Layout/Layout'
 
 const App = () => {
-  const {token, logout, user} = useContext(UserContext)
+  const { token, logout, user } = useContext(UserContext)
   // console.log("user", user.test)
   console.log("token-true", token)
   const navigate = useNavigate()
@@ -35,6 +36,12 @@ const App = () => {
     </Routes>
     </main>
     </div>
+    // <Routes>
+    //   <Route path='/login' element={<Login />} />
+    //   <Route element={<Layout />}>
+    //     <Route index element={<Homepage />} />
+    //   </Route>
+    // </Routes>
   )
 }
 
