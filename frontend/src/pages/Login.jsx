@@ -21,7 +21,7 @@ const Login = () => {
     e.preventDefault()
     setError('')
     try {
-      const res = await fetch("/api/login", {
+      const res = await fetch("/api/auth/login", {
         method: "POST",
         body: JSON.stringify(state),
         headers: {
