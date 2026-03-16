@@ -39,6 +39,9 @@ const App = () => {
       <Route element={<AdminProtectedRoute />}>
         <Route path='/admin' element={<Homepage role="admin" />} />
         <Route path='/admin/vendor/requests' element={<Homepage role="admin" />} />
+        <Route path='/admin/vendor/requests/all' element={<Homepage role="admin" />} />
+        <Route path='/admin/vendor/requests/pending' element={<Homepage role="admin" />} />
+        <Route path='/admin/vendor/requests/rejected' element={<Homepage role="admin" />} />
       </Route>
       {/* <Route path='/admin' element={token && user?.role === "admin" ? <Homepage role={"admin"}/> : <Login />} />
       <Route path='/admin/vendor/requests' element={token && user?.role === "admin" ? <Homepage role={"admin"}/> : <Login />} /> */}

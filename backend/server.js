@@ -102,7 +102,10 @@ app.get("/api/admin/vendor/requests",validToken, isAdmin, async(req, res) => {
     //will check for vendor requests, edit role for vendor and change it to vendor and edit vendorId for user and fill that
     //list all vendors with pending status
     try {
-        const vendors = await Vendor.find({status: "pending"}) //pending vendors
+        //we can filter out status pending or rejected or approved based on search query
+        const {type} = req.query
+        // console.log("query", req.query)
+        const vendors = await Vendor.find(type ? {status: type} : {}) //pending vendors
         return res.status(200).json({success: true, vendors})
         // console.log("vendors", vendors) 
     } catch (error) {
@@ -110,6 +113,8 @@ app.get("/api/admin/vendor/requests",validToken, isAdmin, async(req, res) => {
     }
     // res.send("here in vendor request")
 })
+
+//make a rejected vendors endpoint -- made in request endpoint
 
 app.post("/api/admin/vendor/:vendorId", validToken, isAdmin, async(req, res) => {
     try {

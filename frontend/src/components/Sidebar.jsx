@@ -13,8 +13,14 @@ const Sidebar = ({role}) => {
     }}>
       <ul>
         {/* <li onClick={() => setLayout("admin-vendor")}> */}
-        <li onClick={() => navigate('/admin/vendor/requests')}>
-          Vendor Requests
+        <li onClick={() => navigate('/admin/vendor/requests/all')}>
+          All Vendors
+        </li>
+        <li onClick={() => navigate('/admin/vendor/requests/pending')}>
+          Vendor Requests Pending
+        </li>
+        <li onClick={() => navigate('/admin/vendor/requests/rejected')}>
+          Vendor Requests Rejected
         </li>
       </ul>
     </div>
