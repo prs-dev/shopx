@@ -8,6 +8,7 @@ const { isAdmin, isVendor, validToken } = require("./middlewares/roleAuth")
 
 const userRouter = require('./routes/user.routes')
 const authRouter = require('./routes/auth.routes')
+const vendorRouter = require('./routes/vendor.routes')
 
 require("dotenv").config()
 
@@ -17,38 +18,7 @@ app.use(express.json())
 
 app.use('/api/user', userRouter)
 app.use('/api/auth', authRouter)
-
-app.post('/api/vendor/create', validToken, async (req, res) => {
-    try {
-        // console.log("vendor", req.body)
-        const { name, description } = req.body
-        if (!name || !description) return res.status(400).json({ msg: "please provide all fields!" })
-        const vendorExists = await Vendor.findOne({ user: req.id })
-        // let user = await User.findByIdAndUpdate(req.id, {role: "vendor"}) //this should be done by admin
-        if (vendorExists) return res.status(400).json({ msg: "You already submitted the request!" })
-        const newVendor = new Vendor({
-            name, description, user: req.id
-        })
-        await newVendor.save()
-        // console.log("user", user)
-        // await user.save()
-        return res.status(201).json({
-            msg: "Your vendor request has been submitted!"
-        })
-    } catch (error) {
-        console.log("error while creating vendor", error)
-    }
-})
-
-app.get('/api/vendor', validToken, isVendor, async(req, res) => {
-    try {
-        console.log("user", req.user)
-        const vendorData = await Vendor.findOne({user: req.user._id})
-        return res.json({msg: "vendor data", vendor: vendorData})
-    } catch (error) {
-        console.log("error in vendor data fetching", error)
-    }
-})
+app.use('/api/vendor', vendorRouter)
 
 app.get("/api/admin/vendor/requests",validToken, isAdmin, async(req, res) => {
     //will check for vendor requests, edit role for vendor and change it to vendor and edit vendorId for user and fill that
