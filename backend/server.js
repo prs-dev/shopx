@@ -7,6 +7,7 @@ const userRouter = require('./routes/user.routes')
 const authRouter = require('./routes/auth.routes')
 const vendorRouter = require('./routes/vendor.routes')
 const adminRouter = require('./routes/admin.routes')
+const productRouter = require('./routes/product.routes')
 
 const app = express()
 
@@ -16,10 +17,12 @@ app.use('/api/user', userRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/vendor', vendorRouter)
 app.use('/api/admin', adminRouter)
+app.use('/api/products', productRouter)
 
-app.get("/", (req, res) => {
-    res.send("<h1>hello</h1>")
-})
+//middleware for unknown route handling
+app.use((req, res, next) => {
+    res.status(404).send("<h1>404 Not Found</h1>");
+});
 
 mongoose.connect(process.env.MONGO)
     .then(() => {
