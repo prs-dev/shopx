@@ -5,13 +5,18 @@ const Sidebar = ({role}) => {
   const navigate = useNavigate()
   if(role === "admin") return (
     <div style={{
-      width: "200px",
+      maxWidth: "200px",
       background: "#333",
       height: "100vh",
       color: "white",
-      padding: "10px"
+      padding: "10px",
     }}>
-      <ul>
+      <ul style={{
+        display: "flex",
+        flexDirection: 'column',
+        listStyle: "none",
+        gap: "20px"
+      }}>
         {/* <li onClick={() => setLayout("admin-vendor")}> */}
         <li onClick={() => navigate('/admin/vendor/requests/all')}>
           All Vendors
