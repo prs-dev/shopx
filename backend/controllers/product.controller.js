@@ -1,6 +1,15 @@
 const Product = require('../models/Product')
 
 const allProducts = async(req, res) => {
+    try {
+        const products = await Product.find({})
+        res.status(200).json({
+            products
+        })
+    } catch (error) {
+        console.log("error in fetching products", error)
+    }
+    
     res.send('allproducts')
 }
 

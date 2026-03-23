@@ -6,7 +6,6 @@ const Login = () => {
   const {setToken} = useContext(UserContext)
 
   const [state, setState] = useState({
-    name: "",
     email: "",
     password: ''
   })
