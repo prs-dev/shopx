@@ -11,10 +11,12 @@ import { useState } from 'react'
 import Layout from './Layout/Layout'
 import VendorProtectedRoute from './Layout/VendorProtectedRoute'
 import AdminProtectedRoute from './Layout/AdminProtectedRoute'
+import { userToken } from './context/UserContext'
 
 const App = () => {
   const { token, logout, user } = useContext(UserContext)
-  // console.log("user", user.test)
+  // console.log("user", userToken())
+
   console.log("token-true", token)
   const navigate = useNavigate()
   return (
@@ -35,6 +37,7 @@ const App = () => {
       {/* <Route path='/vendor' element={token && user?.role === "vendor" ? <Homepage role={"vendor"}/> : <Login />} /> */}
       <Route element={<VendorProtectedRoute />}>
         <Route path='/vendor' element={<Homepage role={'vendor'}/>} />
+        <Route path='/vendor/products' element={<Homepage role={"vendor"} />} />
       </Route>
       <Route element={<AdminProtectedRoute />}>
         <Route path='/admin' element={<Homepage role="admin" />} />

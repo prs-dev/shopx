@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, matchPath } from 'react-router-dom'
 import Dialog from '../components/Dialog'
+import { allProducts } from '../context/ProductContext'
 
 // const Dashboard = ({role, layout, setLayout, token}) => {
 const Dashboard = ({ role, token }) => {
@@ -11,6 +12,7 @@ const Dashboard = ({ role, token }) => {
   const [rejectedVendors, setRejectedVendors] = useState(null)
   const [activeVendor, setActiveVendor] = useState(null)
   const [vendorData, setVendorData] = useState(null)
+  const products = allProducts()
 
   const fetchPendingVendors = async () => {
     try {
@@ -107,7 +109,8 @@ const Dashboard = ({ role, token }) => {
 
   // console.log("admin", role, token)
   // console.log("testing", location.pathname.includes("/vendor/request"))
-  console.log("pendingVendors", pendingVendors, "vendors", vendors, rejectedVendors, )
+  // console.log("pendingVendors", pendingVendors, "vendors", vendors, rejectedVendors, )
+  console.log(matchPath({path: '/login', exact: true}, location.pathname))
   if (role === "admin") return (
     <div>
       {location.pathname.includes("/vendor/requests/pending") && <div style={{ padding: "10px", display: "flex", gap: "10px" }}>
@@ -177,13 +180,24 @@ const Dashboard = ({ role, token }) => {
     </div>
   )
   if (role === "vendor") return (
-    <div>
+    <>
+    {(matchPath({path: '/vendor', exact: true}, location.pathname) || matchPath({path: '/login', exact: true}, location.pathname)) && <div>
       vendor hun main
       <div>
         <p>Name: {vendorData?.vendor?.name}</p>
         <p>Description: {vendorData?.vendor?.description}</p>
       </div>
-    </div>
+    </div>}
+
+    {matchPath({path: '/vendor/products', exact: true}, location.pathname) && <div>
+      {products?.map(product => <div>
+      {product.name}
+      {product.description}
+      {product.stock}
+      {product.price}
+      </div>)}
+    </div>}
+    </>
   )
 }
 

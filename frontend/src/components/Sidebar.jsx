@@ -39,8 +39,8 @@ const Sidebar = ({role}) => {
       padding: "10px"
     }}>
       <ul>
-        <li>
-          All Shops
+        <li onClick={() => navigate('/vendor/products')}>
+          All Products
         </li>
       </ul>
     </div>

@@ -2,7 +2,7 @@ const Product = require('../models/Product')
 
 const allProducts = async (req, res) => {
     try {
-        const products = await Product.find({})
+        const products = await Product.find({vendor: req.id}) //it finds all products irrespective of correct vendor or not, so we need only those who is created by current vendor
         res.status(200).json({
             products
         })
