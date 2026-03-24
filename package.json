@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon backend/server.js",
-    "client": "npm run dev --prefix frontend"
+    "server": "nodemon server/server.js",
+    "client": "npm run dev --prefix client"
   },
   "author": "prs",
   "license": "ISC",
