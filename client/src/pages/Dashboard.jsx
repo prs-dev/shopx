@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useLocation, matchPath } from 'react-router-dom'
 import Dialog from '../components/Dialog'
 import { allProducts } from '../context/ProductContext'
+import ProductForm from '../components/ProductForm'
 
 // const Dashboard = ({role, layout, setLayout, token}) => {
 const Dashboard = ({ role, token }) => {
@@ -197,6 +198,17 @@ const Dashboard = ({ role, token }) => {
       {product.price}
       </div>)}
     </div>}
+
+    {matchPath({path: '/vendor/product/new', exact: true}, location.pathname) && <div
+      style={{
+        display: 'flex',
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100%",
+        width: "100vw"
+      }}
+    ><ProductForm /></div>}
     </>
   )
 }

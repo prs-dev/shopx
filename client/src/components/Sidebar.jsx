@@ -11,12 +11,7 @@ const Sidebar = ({role}) => {
       color: "white",
       padding: "10px",
     }}>
-      <ul style={{
-        display: "flex",
-        flexDirection: 'column',
-        listStyle: "none",
-        gap: "20px"
-      }}>
+      <ul style={ulStyle}>
         {/* <li onClick={() => setLayout("admin-vendor")}> */}
         <li onClick={() => navigate('/admin/vendor/requests/all')}>
           All Vendors
@@ -38,9 +33,12 @@ const Sidebar = ({role}) => {
       color: "white",
       padding: "10px"
     }}>
-      <ul>
+      <ul style={ulStyle}>
         <li onClick={() => navigate('/vendor/products')}>
           All Products
+        </li>
+        <li onClick={() => navigate('/vendor/product/new')}>
+          Register New Product
         </li>
       </ul>
     </div>
@@ -48,3 +46,10 @@ const Sidebar = ({role}) => {
 }
 
 export default Sidebar
+
+const ulStyle = {
+        display: "flex",
+        flexDirection: 'column',
+        listStyle: "none",
+        gap: "12px"
+      }
