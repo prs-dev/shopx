@@ -121,6 +121,9 @@ const Dashboard = ({ role, token }) => {
       {approveRoute('/admin') && <div>
         Admin hun main
       </div>}
+      {approveRoute('/admin/products') && <div>
+        all products
+      </div>}
       {approveRoute("/admin/vendor/requests/pending") && <div style={{ padding: "10px", display: "flex", gap: "10px" }}>
         {pendingVendors?.map(item =>
           <div style={{

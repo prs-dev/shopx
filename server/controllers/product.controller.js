@@ -5,7 +5,9 @@ const Vendor = require('../models/Vendor')
 const allProducts = async (req, res) => {
     try {
         // const products = await Product.find({ vendor: req.id }) //it finds all products irrespective of correct vendor or not, so we need only those who is created by current vendor
-        const products = await Product.find({ vendor: req.user.vendorId })
+        // const products = await Product.find(req.user?.vendorId ? { vendor: req.user.vendorId } : {}) // removed token from this, anybody can view products
+        const vendorId = req.query.vendorId
+        const products = await Product.find(vendorId ? {vendor: vendorId} : {})
         res.status(200).json({
             products
         })

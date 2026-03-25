@@ -11,11 +11,10 @@ export const ProductContextProvider = ({ children }) => {
         // if(role === "vendor") console.log("here is VENDOR!@")
         const fetchProducts = async () => {
             try {
-                const res = await fetch('/api/products', {
+                const res = await fetch(`/api/products${user.role === "vendor" && `?vendorId=${user.vendorId}`}`, {
                     method: "get",
                     headers: {
                         "content-type": "application/json",
-                        "Authorization": `Bearer ${token}`
                     }
                 })
                 if (res.ok) {

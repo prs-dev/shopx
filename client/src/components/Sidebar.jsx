@@ -25,6 +25,9 @@ const Sidebar = ({role}) => {
         <li onClick={() => navigate('/admin/vendor/requests/rejected')}>
           Vendor Requests Rejected
         </li>
+        <li onClick={() => navigate('/admin/products')}>
+          All Products
+        </li>
       </ul>
     </div>
   )
