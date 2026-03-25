@@ -1,8 +1,14 @@
-import React from 'react'
+import ProductCard from "../components/ProductCard"
+import { allProducts } from "../context/ProductContext"
 
 const ProductPage = () => {
+  const products = allProducts()
   return (
-    <div>ProductPage</div>
+    <div>
+      {products?.map(product => <>
+        <ProductCard {...{product}}/>
+      </>)}
+    </div>
   )
 }
 

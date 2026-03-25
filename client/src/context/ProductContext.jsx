@@ -11,7 +11,7 @@ export const ProductContextProvider = ({ children }) => {
         // if(role === "vendor") console.log("here is VENDOR!@")
         const fetchProducts = async () => {
             try {
-                const res = await fetch(`/api/products${user.role === "vendor" && `?vendorId=${user.vendorId}`}`, {
+                const res = await fetch(`/api/products${user.role === "vendor" ? `?vendorId=${user.vendorId}` : ''}`, {
                     method: "get",
                     headers: {
                         "content-type": "application/json",
@@ -25,8 +25,8 @@ export const ProductContextProvider = ({ children }) => {
                 console.log("error in fetching products", error)
             }
         }
-        if(user && user.role === "vendor") fetchProducts()
-    }, [user?.role])
+         fetchProducts()
+    }, [])
 
     const createProduct = async(body) => {
         try {

@@ -32,7 +32,7 @@ const Navbar = ({ logout, navigate, user }) => {
                             borderRadius: "5px"
                         }}>Become a vendor</span>
                     </li>}
-                    <li>Welcome {user?.name}</li>
+                    <li onClick={() => navigate('/profile')}>Welcome {user?.name}</li>
                     <li onClick={logout}>Logout</li>
                 </> : <>
                     <li onClick={() => navigate("/register")}>Register</li>

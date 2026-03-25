@@ -2,8 +2,8 @@ import { useContext, useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import Dashboard from '../pages/Dashboard'
 import { UserContext } from '../context/UserContext'
-import Profile from './Profile'
 import { Navigate } from 'react-router-dom'
+import ProductPage from './ProductPage'
 
 const Homepage = ({role}) => {
   const { user, token } = useContext(UserContext)
@@ -21,7 +21,7 @@ const Homepage = ({role}) => {
           {/* <Dashboard {...{setLayout, layout, token}} role={role} /> */}
           <Dashboard role={role} token={token}/>
         </div>
-      </> : <Profile user={user}/>}
+      </> : <ProductPage />}
     </div>
   )
 }

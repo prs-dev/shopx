@@ -13,6 +13,7 @@ import VendorProtectedRoute from './Layout/VendorProtectedRoute'
 import AdminProtectedRoute from './Layout/AdminProtectedRoute'
 import { userToken } from './context/UserContext'
 import ProductPage from './pages/ProductPage'
+import Profile from './pages/Profile'
 
 const App = () => {
   const { token, logout, user } = useContext(UserContext)
@@ -31,7 +32,8 @@ const App = () => {
     }}>
       <Routes>
       {/* <Register /> */}
-      <Route path="/" element={token ? <Homepage role={user?.role}/> : <Register />} />
+      <Route path="/" element={token ? <Homepage role={user?.role}/> : <Login />} />
+      <Route path="/profile" element={token ? <Profile user={user}/> : <Login />} />
       <Route path="/register" element={token ? <Homepage role={user?.role}/> : <Register />} />
       <Route path='/login' element={token ? <Homepage role={user?.role}/> : <Login />} />
       <Route path='/vendor/new' element={token ? <VendorRegister token={token}/> : <Login />} />
