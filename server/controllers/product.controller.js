@@ -5,7 +5,7 @@ const Vendor = require('../models/Vendor')
 const allProducts = async (req, res) => {
     try {
         // const products = await Product.find({ vendor: req.id }) //it finds all products irrespective of correct vendor or not, so we need only those who is created by current vendor
-        const products = await Product.find({vendor: req.user.vendorId})
+        const products = await Product.find({ vendor: req.user.vendorId })
         res.status(200).json({
             products
         })
@@ -45,17 +45,18 @@ const updateProduct = async (req, res) => {
         const productId = req.params.id
         const productExists = await Product.findOne({ _id: productId })
         if (!productExists) return res.status(400).json({ success: false, msg: "product does not exist!" })
-            //check for correct vendor
-        if (productExists.vendor !== req.user.vendorId) return res.status(400).json({
+        //check for correct vendor
+        // console.log("test", productExists.vendor.toString(), req.user.vendorId.toString())
+        if (productExists.vendor.toString() !== req.user.vendorId.toString()) return res.status(400).json({
             success: false,
-            mmsg: "You are not authorized!"
+            mmsg: "You are not authorized to perform this operation!"
         })
-        console.log("testing update")
-        // const updatedProduct = await Product.findByIdAndUpdate(productId, req.body, { new: true })
-        // return res.status(200).json({
-        //     success: true,
-        //     msg: "Product Updated"
-        // })
+        // console.log("testing update")
+        const updatedProduct = await Product.findByIdAndUpdate(productId, req.body, { new: true })
+        return res.status(200).json({
+            success: true,
+            msg: "Product Updated"
+        })
     } catch (error) {
         console.log("error in updating product", error)
     }
@@ -67,7 +68,15 @@ const deleteProduct = async (req, res) => {
         const productId = req.params.id
         const productExists = await Product.findOne({ _id: productId })
         if (!productExists) return res.status(400).json({ success: false, msg: "product does not exist!" })
+        //check for correct vendor
+        if (productExists.vendor.toString() !== req.user.vendorId.toString()) return res.status(400).json({
+            success: false,
+            mmsg: "You are not authorized to perform this operation!"
+        })
+        const vendor = await Vendor.findOne({ _id: req.user.vendorId })
         const deletedProduct = await Product.findByIdAndDelete(productId, { new: true })
+        vendor.products = vendor.products.filter(item => item._id.toString() !== productId)
+        await vendor.save()
         return res.status(200).json({
             success: true,
             msg: "Product Deleted"
