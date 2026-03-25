@@ -21,13 +21,7 @@ const userSchema = new mongoose.Schema({
     vendorId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Vendor"
-    }, 
-    products: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Product"
-        }
-    ]
+    }
 }, {
     timestamps: true
 })

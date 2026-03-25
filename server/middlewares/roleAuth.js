@@ -35,7 +35,9 @@ const isVendor = async(req, res, next) => {
         const userId = req.id //user id
         const user = await User.findOne({_id: userId})
         if(!user) return res.status(400).json({msg: "Invalid token!"})
-        if(user.role === "user") return res.status(401).json({msg: "You are not authorized!"})
+            console.log("user", user, (user.role !== "admin"))
+        // if(user.role === "user") return res.status(401).json({msg: "You are not authorized!"})
+        if(!user.vendorId && user.role !== "admin") return res.status(401).json({msg: "You are not authorized!"}) //this is more robust then just checking user role
         req.user = user
         // console.log("token", token, userDetails)
         next()
