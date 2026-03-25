@@ -13,6 +13,9 @@ const Sidebar = ({role}) => {
     }}>
       <ul style={ulStyle}>
         {/* <li onClick={() => setLayout("admin-vendor")}> */}
+        <li onClick={() => navigate('/admin')}>
+          Dashboard
+        </li>
         <li onClick={() => navigate('/admin/vendor/requests/all')}>
           All Vendors
         </li>
@@ -34,6 +37,9 @@ const Sidebar = ({role}) => {
       padding: "10px"
     }}>
       <ul style={ulStyle}>
+        <li onClick={() => navigate('/vendor')}>
+          Dashboard
+        </li>
         <li onClick={() => navigate('/vendor/products')}>
           All Products
         </li>

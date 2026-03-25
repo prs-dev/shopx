@@ -45,11 +45,17 @@ const updateProduct = async (req, res) => {
         const productId = req.params.id
         const productExists = await Product.findOne({ _id: productId })
         if (!productExists) return res.status(400).json({ success: false, msg: "product does not exist!" })
-        const updatedProduct = await Product.findByIdAndUpdate(productId, req.body, { new: true })
-        return res.status(200).json({
-            success: true,
-            msg: "Product Updated"
+            //check for correct vendor
+        if (productExists.vendor !== req.user.vendorId) return res.status(400).json({
+            success: false,
+            mmsg: "You are not authorized!"
         })
+        console.log("testing update")
+        // const updatedProduct = await Product.findByIdAndUpdate(productId, req.body, { new: true })
+        // return res.status(200).json({
+        //     success: true,
+        //     msg: "Product Updated"
+        // })
     } catch (error) {
         console.log("error in updating product", error)
     }

@@ -37,6 +37,7 @@ const isVendor = async(req, res, next) => {
         if(!user) return res.status(400).json({msg: "Invalid token!"})
             // console.log("user", user, (user.role !== "admin"))
         if(user.role === "user") return res.status(401).json({msg: "You are not authorized!"})
+            req.user = user
         // console.log("token", token, userDetails)
         next()
     } catch (error) {

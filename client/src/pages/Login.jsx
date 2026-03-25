@@ -1,6 +1,6 @@
 import {useState, useContext} from 'react'
 import {UserContext} from '../context/UserContext'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const {setToken} = useContext(UserContext)
@@ -13,6 +13,8 @@ const Login = () => {
   const [success, setSuccess] = useState('')
 
   const [error, setError] = useState("")
+
+  const navigate = useNavigate()
 
   const handleChange = e => setState(prev => ({...prev, [e.target.name]: e.target.value}))
 
@@ -36,6 +38,7 @@ const Login = () => {
       console.log("ok", data)
       setSuccess(data?.msg)
       setToken(data?.token)
+      // navigate()
       // console.log("response", await res.text())
     } catch (error) {
       console.log("error in login user", error)

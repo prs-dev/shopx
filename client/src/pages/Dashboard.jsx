@@ -37,7 +37,7 @@ const Dashboard = ({ role, token }) => {
     }
   }
 
-  const fetchVendorData = async() => {
+  const fetchVendorData = async () => {
     try {
       const res = await fetch('/api/vendor', {
         method: "get",
@@ -45,7 +45,7 @@ const Dashboard = ({ role, token }) => {
           authorization: `Bearer ${token}`
         }
       })
-      if(res.ok) {
+      if (res.ok) {
         const data = await res.json()
         setVendorData(data)
       }
@@ -108,13 +108,20 @@ const Dashboard = ({ role, token }) => {
     }
   }
 
+  const approveRoute = (route) => {
+    return matchPath({ path: route, exact: true }, location.pathname) ? true : false
+  }
+
   // console.log("admin", role, token)
   // console.log("testing", location.pathname.includes("/vendor/request"))
   // console.log("pendingVendors", pendingVendors, "vendors", vendors, rejectedVendors, )
-  console.log(matchPath({path: '/login', exact: true}, location.pathname))
+  console.log(matchPath({ path: '/login', exact: true }, location.pathname))
   if (role === "admin") return (
     <div>
-      {location.pathname.includes("/vendor/requests/pending") && <div style={{ padding: "10px", display: "flex", gap: "10px" }}>
+      {approveRoute('/admin') && <div>
+        Admin hun main
+      </div>}
+      {approveRoute("/admin/vendor/requests/pending") && <div style={{ padding: "10px", display: "flex", gap: "10px" }}>
         {pendingVendors?.map(item =>
           <div style={{
             width: "200px",
@@ -125,90 +132,90 @@ const Dashboard = ({ role, token }) => {
             <p>Name: {item.name}</p>
             <p>Description: {item.description}</p>
             <p>Status: {item.status}</p>
-            <button onClick={() => setActiveVendor({id: item._id, status: "approved"})}>Approve Request</button>
-            <button onClick={() => setActiveVendor({id: item._id, status: "rejected"})}>Reject Request</button>
+            <button onClick={() => setActiveVendor({ id: item._id, status: "approved" })}>Approve Request</button>
+            <button onClick={() => setActiveVendor({ id: item._id, status: "rejected" })}>Reject Request</button>
           </div>
           // in future implement a table to list all requests
         )}
       </div>}
-      {location.pathname.includes("/vendor/requests/all") && <div style={{ padding: "10px", display: "flex", flexDirection: "column", gap: "10px" }}>
+      {approveRoute("/admin/vendor/requests/all") && <div style={{ padding: "10px", display: "flex", flexDirection: "column", gap: "10px" }}>
         <h2>All vendors</h2>
         <div style={{
           display: "flex",
           gap: "10px"
         }}>
           {vendors?.map(item =>
-          <div style={{
-            width: "200px",
-            height: "200px",
-            border: "1px solid #333",
-            padding: "10px"
-          }} key={item._id}>
-            <p>Name: {item.name}</p>
-            <p>Description: {item.description}</p>
-            <p>Status: {item.status}</p>
-            {/* <button onClick={() => setActiveVendor({id: item._id, status: "approved"})}>Approve Request</button> */}
-            {/* <button onClick={() => setActiveVendor({id: item._id, status: "rejected"})}>Reject Request</button> */}
-          </div>
-          // in future implement a table to list all requests
-        )}
+            <div style={{
+              width: "200px",
+              height: "200px",
+              border: "1px solid #333",
+              padding: "10px"
+            }} key={item._id}>
+              <p>Name: {item.name}</p>
+              <p>Description: {item.description}</p>
+              <p>Status: {item.status}</p>
+              {/* <button onClick={() => setActiveVendor({id: item._id, status: "approved"})}>Approve Request</button> */}
+              {/* <button onClick={() => setActiveVendor({id: item._id, status: "rejected"})}>Reject Request</button> */}
+            </div>
+            // in future implement a table to list all requests
+          )}
         </div>
       </div>}
-      {location.pathname.includes("/vendor/requests/rejected") && <div style={{ padding: "10px", display: "flex", flexDirection: "column", gap: "10px" }}>
+      {approveRoute('/admin/vendor/requests/rejected') && <div style={{ padding: "10px", display: "flex", flexDirection: "column", gap: "10px" }}>
         <h2>Rejected vendors</h2>
         <div style={{
           display: "flex",
           gap: "10px"
         }}>
           {rejectedVendors?.map(item =>
-          <div style={{
-            width: "200px",
-            height: "200px",
-            border: "1px solid #333",
-            padding: "10px"
-          }} key={item._id}>
-            <p>Name: {item.name}</p>
-            <p>Description: {item.description}</p>
-            <p>Status: {item.status}</p>
-            {/* <button onClick={() => setActiveVendor({id: item._id, status: "approved"})}>Approve Request</button> */}
-            {/* <button onClick={() => setActiveVendor({id: item._id, status: "rejected"})}>Reject Request</button> */}
-          </div>
-          // in future implement a table to list all requests
-        )}
+            <div style={{
+              width: "200px",
+              height: "200px",
+              border: "1px solid #333",
+              padding: "10px"
+            }} key={item._id}>
+              <p>Name: {item.name}</p>
+              <p>Description: {item.description}</p>
+              <p>Status: {item.status}</p>
+              {/* <button onClick={() => setActiveVendor({id: item._id, status: "approved"})}>Approve Request</button> */}
+              {/* <button onClick={() => setActiveVendor({id: item._id, status: "rejected"})}>Reject Request</button> */}
+            </div>
+            // in future implement a table to list all requests
+          )}
         </div>
       </div>}
-      {activeVendor && <Dialog close={setActiveVendor} operation={activeVendor.status === "approved" ? handleApprove : handleReject}/>}
+      {activeVendor && <Dialog close={setActiveVendor} operation={activeVendor.status === "approved" ? handleApprove : handleReject} />}
     </div>
   )
   if (role === "vendor") return (
     <>
-    {(matchPath({path: '/vendor', exact: true}, location.pathname) || matchPath({path: '/login', exact: true}, location.pathname)) && <div>
-      vendor hun main
-      <div>
-        <p>Name: {vendorData?.vendor?.name}</p>
-        <p>Description: {vendorData?.vendor?.description}</p>
-      </div>
-    </div>}
+      {approveRoute('/vendor') && <div>
+        vendor hun main
+        <div>
+          <p>Name: {vendorData?.vendor?.name}</p>
+          <p>Description: {vendorData?.vendor?.description}</p>
+        </div>
+      </div>}
 
-    {matchPath({path: '/vendor/products', exact: true}, location.pathname) && <div>
-      {products?.map(product => <div>
-      {product.name}
-      {product.description}
-      {product.stock}
-      {product.price}
-      </div>)}
-    </div>}
+      {approveRoute("/vendor/products") && <div>
+        {products?.map(product => <div>
+          {product.name}
+          {product.description}
+          {product.stock}
+          {product.price}
+        </div>)}
+      </div>}
 
-    {matchPath({path: '/vendor/product/new', exact: true}, location.pathname) && <div
-      style={{
-        display: 'flex',
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100%",
-        width: "100vw"
-      }}
-    ><ProductForm /></div>}
+      {approveRoute("/vendor/product/new") && <div
+        style={{
+          display: 'flex',
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100%",
+          width: "100vw"
+        }}
+      ><ProductForm /></div>}
     </>
   )
 }
