@@ -4,6 +4,7 @@ import { useLocation, matchPath } from 'react-router-dom'
 import Dialog from '../components/Dialog'
 import { allProducts } from '../context/ProductContext'
 import ProductForm from '../components/ProductForm'
+import Table from '../components/Table'
 
 // const Dashboard = ({role, layout, setLayout, token}) => {
 const Dashboard = ({ role, token }) => {
@@ -200,14 +201,10 @@ const Dashboard = ({ role, token }) => {
         </div>
       </div>}
 
-      {approveRoute("/vendor/products") && <div>
-        {products?.map(product => <div>
-          {product.name}
-          {product.description}
-          {product.stock}
-          {product.price}
-        </div>)}
-      </div>}
+      {approveRoute("/vendor/products") && 
+       
+        <Table data={products}/>
+        }
 
       {approveRoute("/vendor/product/new") && <div
         style={{

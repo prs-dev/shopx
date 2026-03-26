@@ -4,3 +4,13 @@
   box-sizing: border-box;
   font-family: sans-serif;
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+tr, td, th {
+  border: 1px solid #333;
+  padding: 10px;
+}

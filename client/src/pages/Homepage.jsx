@@ -11,13 +11,14 @@ const Homepage = ({role}) => {
   // console.log("test", user, role)
   return (
     <div style={{
-      display: "flex"
+      display: "flex",
+      width: "100%"
     }}>
       {role === "admin" || role === "vendor" ? <>
         <div>
           <Sidebar role={role} />
         </div>
-        <div>
+        <div style={{width: '100%'}}>
           {/* <Dashboard {...{setLayout, layout, token}} role={role} /> */}
           <Dashboard role={role} token={token}/>
         </div>
