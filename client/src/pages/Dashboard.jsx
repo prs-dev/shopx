@@ -12,7 +12,7 @@ const Dashboard = ({ role, token }) => {
   const [vendors, setVendors] = useState(null)
   const [pendingVendors, setPendingVendors] = useState(null)
   const [rejectedVendors, setRejectedVendors] = useState(null)
-  const [activeVendor, setActiveVendor] = useState(null)
+  const [activeVendor, setActiveVendor] = useState(null) //vendor to update status
   const [vendorData, setVendorData] = useState(null)
   const products = allProducts()
 
@@ -113,6 +113,20 @@ const Dashboard = ({ role, token }) => {
     return matchPath({ path: route, exact: true }, location.pathname) ? true : false
   }
 
+  // const handleProductDelete = async() => {
+  //   try {
+  //     const res = await fetch(`/api/products/delete/${productId}`, {
+  //       method: "delete",
+  //       headers: {
+  //         "Authorization": `Bearer ${token}`
+  //       }
+  //     })
+  //     console.log("operation comepleted", res)
+  //   } catch (error) {
+  //     console.log("error in deleting product", error)
+  //   }
+  // }
+
   // console.log("admin", role, token)
   // console.log("testing", location.pathname.includes("/vendor/request"))
   // console.log("pendingVendors", pendingVendors, "vendors", vendors, rejectedVendors, )
@@ -202,8 +216,7 @@ const Dashboard = ({ role, token }) => {
       </div>}
 
       {approveRoute("/vendor/products") && 
-       
-        <Table data={products}/>
+        <Table data={products} />
         }
 
       {approveRoute("/vendor/product/new") && <div
