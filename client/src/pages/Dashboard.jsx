@@ -5,6 +5,7 @@ import Dialog from '../components/Dialog'
 import { allProducts } from '../context/ProductContext'
 import ProductForm from '../components/ProductForm'
 import Table from '../components/Table'
+import UpdateProduct from './UpdateProduct'
 
 // const Dashboard = ({role, layout, setLayout, token}) => {
 const Dashboard = ({ role, token }) => {
@@ -229,6 +230,8 @@ const Dashboard = ({ role, token }) => {
           width: "100vw"
         }}
       ><ProductForm /></div>}
+      
+      {approveRoute('/vendor/product/update/:id') && <UpdateProduct />}
     </>
   )
 }

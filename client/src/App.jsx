@@ -42,6 +42,7 @@ const App = () => {
       <Route element={<VendorProtectedRoute />}>
         <Route path='/vendor' element={<Homepage role={'vendor'}/>} />
         <Route path='/vendor/products' element={<Homepage role={"vendor"} />} />
+        <Route path='/vendor/product/update/:id' element={<Homepage role={"vendor"} />} />
         <Route path='/vendor/product/new' element={<Homepage role={"vendor"} />} />
       </Route>
       <Route element={<AdminProtectedRoute />}>

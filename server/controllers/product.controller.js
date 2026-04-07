@@ -54,10 +54,12 @@ const updateProduct = async (req, res) => {
             mmsg: "You are not authorized to perform this operation!"
         })
         // console.log("testing update")
+        // console.log("req.body", req.body)
         const updatedProduct = await Product.findByIdAndUpdate(productId, req.body, { new: true })
         return res.status(200).json({
             success: true,
-            msg: "Product Updated"
+            msg: "Product Updated",
+            updatedProduct
         })
     } catch (error) {
         console.log("error in updating product", error)
@@ -89,9 +91,26 @@ const deleteProduct = async (req, res) => {
     // res.send('delproducts')
 }
 
+const singleProduct = async(req, res) => {
+    try {
+        const productId = req.params.id
+        const productExists = await Product.findOne({ _id: productId })
+        if (!productExists) return res.status(400).json({ success: false, msg: "product does not exist!" })
+        //check for correct vendor
+        if (productExists.vendor.toString() !== req.user.vendorId.toString()) return res.status(400).json({
+            success: false,
+            mmsg: "You are not authorized to perform this operation!"
+        })
+        return res.status(200).json(productExists)
+    } catch (error) {
+        console.log("error in fetching details of single product", error)
+    }
+}
+
 module.exports = {
     allProducts,
     createProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    singleProduct
 }

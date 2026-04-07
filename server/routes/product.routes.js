@@ -1,8 +1,9 @@
 const { isVendor, validToken } = require("../middlewares/roleAuth")
-const {createProduct, allProducts, updateProduct, deleteProduct} = require('../controllers/product.controller')
+const {createProduct, allProducts, updateProduct, deleteProduct, singleProduct} = require('../controllers/product.controller')
 const router = require("express").Router()
 
 router.get("/", allProducts)
+router.get("/:id", validToken, isVendor, singleProduct)
 router.post("/create", validToken, isVendor, createProduct)
 router.put("/update/:id", validToken, isVendor, updateProduct)
 router.delete("/delete/:id", validToken, isVendor, deleteProduct)

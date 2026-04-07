@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { useSetActiveProduct, deleteExistingProduct } from '../context/ProductContext'
+import { useSetActiveProduct, deleteExistingProduct, useSetToUpdate } from '../context/ProductContext'
 import Dialog from './Dialog'
-
+import { useNavigate } from 'react-router-dom'
 //central component to be used everywhere required
 const Table = ({ data }) => {
     const [headers, setHeaders] = useState(null)
     const [rows, setRows] = useState(null)
     const {activeProduct, setActiveProduct} = useSetActiveProduct()
+    const setToUpdate = useSetToUpdate()
     const deleteProduct = deleteExistingProduct()
+    const navigate = useNavigate()
     useEffect(() => {
         if (data && data.length > 0) {
             setHeaders(Object.keys(data[0]).filter(item => item !== "__v" && item !== "createdAt" && item !== 'updatedAt' && item !== 'vendor'))
@@ -37,7 +39,8 @@ const Table = ({ data }) => {
                         {Object.values(item)?.map(i => <td>{i}</td>)}
                         <td>
                             <button onClick={() => {
-                                setActiveProduct(item._id)
+                                setToUpdate(item._id)
+                                navigate('/vendor/product/update/' + item._id)
                             }}>Update</button>
                             <button onClick={() => setActiveProduct(item._id)}>Delete</button>
                         </td>

@@ -5,7 +5,8 @@ export const ProductContext = createContext()
 
 export const ProductContextProvider = ({ children }) => {
     const [products, setProducts] = useState(null)
-    const [activeProduct, setActiveProduct] = useState(null)
+    const [activeProduct, setActiveProduct] = useState(null) //for storing delete product id
+    const [toUpdate, setToUpdate] = useState(null)
     const user = userData()
     const token = userToken()
     useEffect(() => {
@@ -64,9 +65,42 @@ export const ProductContextProvider = ({ children }) => {
         }
     }
 
-    console.log("active product", activeProduct)
+    console.log("active product", activeProduct, toUpdate)
 
-    return <ProductContext.Provider value={{ products, createProduct, activeProduct, setActiveProduct, deleteProduct }}>
+    const fetchSingleProduct = async () => {
+        try {
+            const res = await fetch(`/api/products/${toUpdate}`, {
+                method: "get",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+            const data = await res.json()
+            // console.log("update data fetched", data)
+            return data
+        } catch (error) {
+            console.log("error in fetching details of single product")
+        }
+    }
+
+    const updateProduct = async (body) => {
+        try {
+            const res = await fetch(`/api/products/update/${toUpdate}`, {
+                method: "put",
+                body: JSON.stringify(body),
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "content-type": "application/json"
+                }
+            })
+            console.log("operation comepleted", res)
+        } catch (error) {
+            console.log("error in updating product", error)
+        }
+        // console.log("bodyyyyyyyyyyyyyyyyyyyy", body)
+    }
+
+    return <ProductContext.Provider value={{ products, createProduct, activeProduct, setActiveProduct, deleteProduct, setToUpdate, fetchSingleProduct, updateProduct }}>
         {children}
     </ProductContext.Provider>
 }
@@ -83,10 +117,25 @@ export const createNewProduct = () => {
 
 export const useSetActiveProduct = () => {
     const { activeProduct, setActiveProduct } = useContext(ProductContext)
-    return {activeProduct, setActiveProduct}
+    return { activeProduct, setActiveProduct }
 }
 
 export const deleteExistingProduct = () => {
-    const {deleteProduct} = useContext(ProductContext)
+    const { deleteProduct } = useContext(ProductContext)
     return deleteProduct
+}
+
+export const useSetToUpdate = () => {
+    const { setToUpdate } = useContext(ProductContext)
+    return setToUpdate
+}
+
+export const useFetchSingleProduct = () => {
+    const {fetchSingleProduct} = useContext(ProductContext)
+    return fetchSingleProduct
+}
+
+export const updateExistingProduct = () => {
+    const {updateProduct} = useContext(ProductContext)
+    return updateProduct
 }
