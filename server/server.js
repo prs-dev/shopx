@@ -20,6 +20,7 @@ app.use('/api/admin', adminRouter)
 app.use('/api/products', productRouter)
 
 //middleware for unknown route handling
+//automatically falls here if any routes does not match
 app.use((req, res, next) => {
     res.status(404).send("<h1>404 Not Found</h1>");
 });

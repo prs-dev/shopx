@@ -12,6 +12,10 @@ current features:
         * vendor schema and linked to the user schema
         * new vendor can be created
         * vendor can see their name and description
+    *product:
+        * product schema created 
+        * products can be created, updated and deleted from their respective vendor
+        * admin can see and perform operations on products as well
     * admin:
         * admin can see vendor requests and filter by type using query based search `type=pending/rejected`
 
@@ -24,8 +28,16 @@ current features:
 week three complete -- vendor system complete
 
 Screenshots:
- Login: ![alt text](image.png)
- Register: ![alt text](image-1.png)
- Admin View: ![alt text](image-2.png)
- Admin/all vendors: ![alt text](image-3.png)
- Vendor View: ![alt text](image-4.png)
+updated:
+user view:
+root -- ![alt text](image-5.png)
+profile -- ![alt text](image-6.png)
+
+vendor:
+root -- ![alt text](image-7.png)
+all products -- ![alt text](image-8.png)
+register new product -- ![alt text](image-9.png)
+
+admin:
+root -- ![alt text](image-10.png)
+all vendors -- ![alt text](image-11.png)

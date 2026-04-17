@@ -105,6 +105,7 @@ export const ProductContextProvider = ({ children }) => {
     </ProductContext.Provider>
 }
 
+//different hooks for different functions, but can be squised into one hook that provides many functions
 export const allProducts = () => {
     const { products } = useContext(ProductContext)
     return products || []
