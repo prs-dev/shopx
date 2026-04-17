@@ -14,7 +14,11 @@ const productSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Vendor"
     },
-    stock: Number
+    stock: Number,
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Category"
+    }
 }, {
     timestamps: true
 })
