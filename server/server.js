@@ -8,6 +8,7 @@ const authRouter = require('./routes/auth.routes')
 const vendorRouter = require('./routes/vendor.routes')
 const adminRouter = require('./routes/admin.routes')
 const productRouter = require('./routes/product.routes')
+const categoryRouter = require('./routes/category.routes')
 
 const app = express()
 
@@ -18,6 +19,7 @@ app.use('/api/auth', authRouter)
 app.use('/api/vendor', vendorRouter)
 app.use('/api/admin', adminRouter)
 app.use('/api/products', productRouter)
+app.use('/api/category', categoryRouter)
 
 //middleware for unknown route handling
 //automatically falls here if any routes does not match
