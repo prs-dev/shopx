@@ -28,6 +28,7 @@ const Sidebar = ({role}) => {
         <li onClick={() => navigate('/admin/products')}>
           All Products
         </li>
+        <li onClick={() => navigate('/admin/categories')}>Categories</li>
       </ul>
     </div>
   )
