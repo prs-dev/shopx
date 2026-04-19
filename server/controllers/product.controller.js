@@ -1,6 +1,7 @@
 const Product = require('../models/Product')
 // const User = require('../models/User')
 const Vendor = require('../models/Vendor')
+const Category = require('../models/Category')
 
 const allProducts = async (req, res) => {
     try {
@@ -20,21 +21,25 @@ const allProducts = async (req, res) => {
 
 const createProduct = async (req, res) => {
     try {
-        const { name, description, price, stock } = req.body
+        const { name, description, price, stock, category } = req.body
         if (!name || !description || !price || !stock) return res.status(400).json({ success: false, msg: "Please provide all the fields!" })
         const productExists = await Product.findOne({ name, vendor: req.user.vendor })
         if (productExists) return res.status(400).json({ success: false, msg: "do not create duplicate products!" })
         const vendor = await Vendor.findOne({ _id: req.user.vendorId })
+        const existingCategory = await Category.findOne({_id: category})
         const newProduct = new Product({
             name,
             description,
             price,
             stock,
+            category,
             vendor: req.user.vendorId
         })
         await newProduct.save()
         vendor.products = [...vendor.products, newProduct._id]
         await vendor.save()
+        existingCategory.products = [...existingCategory.products, newProduct._id]
+        await existingCategory.save()
         return res.status(201).json({ success: true, msg: "product created", product: newProduct })
     } catch (error) {
         console.log("error in creating product", error)

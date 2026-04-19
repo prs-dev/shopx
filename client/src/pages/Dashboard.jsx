@@ -224,12 +224,12 @@ const Dashboard = ({ role, token }) => {
 
       {approveRoute("/vendor/product/new") && <div
         style={{
-          display: 'flex',
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100%",
-          width: "100vw"
+          // display: 'flex',
+          // flexDirection: "column",
+          // alignItems: "center",
+          // justifyContent: "center",
+          // height: "100%",
+          // width: "100%"
         }}
       ><ProductForm /></div>}
       
