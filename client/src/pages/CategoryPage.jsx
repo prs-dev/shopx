@@ -17,6 +17,7 @@ import { userToken } from '../context/UserContext'
 
 const CategoryPage = () => {
     const [categories, setCategories] = useState(null)
+    const [active, setActive] = useState(null)
     const [state, setState] = useState()
     const token = userToken()
 

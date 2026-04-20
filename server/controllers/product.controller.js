@@ -54,13 +54,19 @@ const updateProduct = async (req, res) => {
         if (!productExists) return res.status(400).json({ success: false, msg: "product does not exist!" })
         //check for correct vendor
         // console.log("test", productExists.vendor.toString(), req.user.vendorId.toString())
-        if (productExists.vendor.toString() !== req.user.vendorId.toString()) return res.status(400).json({
+        if (productExists.vendor?.toString() !== req.user.vendorId?.toString() && req.user.role !== 'admin') return res.status(400).json({
             success: false,
             mmsg: "You are not authorized to perform this operation!"
         })
+        // console.log(productExists, req.user)
         // console.log("testing update")
         // console.log("req.body", req.body)
         const updatedProduct = await Product.findByIdAndUpdate(productId, req.body, { new: true })
+        if(req.user.role === "admin") { //if admin is changing the category, otherwise vendor will only update the category
+            const existingCategory = await Category.findOne({_id: req.body.category})
+            existingCategory.products = [...existingCategory.products, req.body._id]
+            await existingCategory.save()
+        }
         return res.status(200).json({
             success: true,
             msg: "Product Updated",

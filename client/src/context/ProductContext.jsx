@@ -97,8 +97,10 @@ export const ProductContextProvider = ({ children }) => {
         } catch (error) {
             console.log("error in updating product", error)
         }
-        // console.log("bodyyyyyyyyyyyyyyyyyyyy", body)
+        // console.log("bodyyyyyyyyyyyyyyyyyyyy", toUpdate)
     }
+
+    console.log("bodyyyyyyyyyyyyyyyyyyyy", toUpdate)
 
     return <ProductContext.Provider value={{ products, createProduct, activeProduct, setActiveProduct, deleteProduct, setToUpdate, fetchSingleProduct, updateProduct }}>
         {children}

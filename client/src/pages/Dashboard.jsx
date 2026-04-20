@@ -7,6 +7,7 @@ import ProductForm from '../components/ProductForm'
 import Table from '../components/Table'
 import UpdateProduct from './UpdateProduct'
 import CategoryPage from './CategoryPage'
+import ProductPage from '../pages/ProductPage'
 
 // const Dashboard = ({role, layout, setLayout, token}) => {
 const Dashboard = ({ role, token }) => {
@@ -138,9 +139,7 @@ const Dashboard = ({ role, token }) => {
       {approveRoute('/admin') && <div>
         Admin hun main
       </div>}
-      {approveRoute('/admin/products') && <div>
-        all products
-      </div>}
+      {approveRoute('/admin/products') && <ProductPage role="admin"/>}
       {approveRoute('/admin/categories') && <CategoryPage />}
       {approveRoute("/admin/vendor/requests/pending") && <div style={{ padding: "10px", display: "flex", gap: "10px" }}>
         {pendingVendors?.map(item =>
