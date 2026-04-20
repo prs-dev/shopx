@@ -16,7 +16,7 @@ const ProductPage = ({role}) => {
       .then(data => setCategories(data))
     }
   }, [])
-  console.log("categories", categories, activeProduct)
+  // console.log("categories", categories, activeProduct)
   return (
     <div>
       {products?.map(product => <>
@@ -26,8 +26,8 @@ const ProductPage = ({role}) => {
           <select value={product.category} onChange={e => {
             const updatedProduct = {...product, category: e.target.value}
             // console.log("upode", updatedProduct)
-            setToUpdate(updatedProduct._id)
-            setActiveProduct(updatedProduct)
+            setToUpdate(updatedProduct._id) //set update id
+            setActiveProduct(updatedProduct) //a temporary holder for update body
             // console.log("upode", updatedProduct._id)
           }}>
             <option value="" disabled>Select</option>

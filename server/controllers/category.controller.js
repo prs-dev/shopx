@@ -18,7 +18,7 @@ const createCategory = async(req, res) => {
 }
 
 const updateCategory = async(req, res) => {
-    //add products or can be used to just update name or description
+    // can be used only to update name or description, products can be added using update products api endpoint
     try {
         const body = req.body
         const categoryId = req.params.id
