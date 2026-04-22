@@ -48,17 +48,36 @@ const Register = () => {
       alignItems: "center",
       justifyContent: "center",
       height: "100vh",
+      width: "100%",
       gap: "10px"
     }}>
-      <div>
+      <div style={{
+        display: 'flex',
+        alignItems: "center",
+        gap: "10px",
+        width: "300px",
+        justifyContent: "space-between"
+      }}>
         <label htmlFor="">Name</label>
         <input type="text" name="name" onChange={handleChange}/>
       </div>
-      <div>
+      <div style={{
+        display: 'flex',
+        alignItems: "center",
+        gap: "10px",
+        width: "300px",
+        justifyContent: "space-between"
+      }}>
         <label htmlFor="">Email</label>
         <input type="email" name="email" onChange={handleChange}/>
       </div>
-      <div>
+      <div style={{
+        display: 'flex',
+        alignItems: "center",
+        gap: "10px",
+        width: "300px",
+        justifyContent: "space-between"
+      }}>
         <label htmlFor="">Password</label>
         <input type="password" name="password" onChange={handleChange}/>
       </div>

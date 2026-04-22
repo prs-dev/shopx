@@ -1,9 +1,9 @@
-import {useState, useContext} from 'react'
-import {UserContext} from '../context/UserContext'
+import { useState, useContext } from 'react'
+import { UserContext } from '../context/UserContext'
 import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
-  const {setToken} = useContext(UserContext)
+  const { setToken } = useContext(UserContext)
 
   const [state, setState] = useState({
     email: "",
@@ -16,7 +16,7 @@ const Login = () => {
 
   const navigate = useNavigate()
 
-  const handleChange = e => setState(prev => ({...prev, [e.target.name]: e.target.value}))
+  const handleChange = e => setState(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -29,10 +29,10 @@ const Login = () => {
           'content-type': "application/json"
         }
       })
-      if(!res.ok) {
+      if (!res.ok) {
         const errorMsg = await res.text()
         setError(JSON.parse(errorMsg)?.msg)
-        return 
+        return
       }
       const data = await res.json()
       console.log("ok", data)
@@ -54,15 +54,28 @@ const Login = () => {
       alignItems: "center",
       justifyContent: "center",
       height: "100vh",
+      width: "100%",
       gap: "10px"
     }}>
-      <div>
+      <div style={{
+        display: 'flex',
+        alignItems: "center",
+        gap: "10px",
+        width: "300px",
+        justifyContent: "space-between"
+      }}>
         <label htmlFor="">Email</label>
-        <input type="email" name="email" onChange={handleChange}/>
+        <input type="email" name="email" onChange={handleChange} />
       </div>
-      <div>
+      <div style={{
+        display: 'flex',
+        alignItems: "center",
+        gap: "10px",
+        width: "300px",
+        justifyContent: "space-between"
+      }}>
         <label htmlFor="">Password</label>
-        <input type="password" name="password" onChange={handleChange}/>
+        <input type="password" name="password" onChange={handleChange} />
       </div>
       <div>
         <button>Save</button>
@@ -70,8 +83,8 @@ const Login = () => {
       <div>
         <p>Not registered ? <Link to='/register'>click here</Link></p>
       </div>
-      {error && <p style={{color: "red"}}>{error}</p>}
-      {success && <p style={{color: "green"}}>{success}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {success && <p style={{ color: "green" }}>{success}</p>}
     </form>
   )
 }
