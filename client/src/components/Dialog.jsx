@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Dialog = ({close, operation}) => {
+    console.log("operation", operation)
     return (
         <div style={{
             display: "flex",

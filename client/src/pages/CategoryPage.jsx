@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { userToken } from '../context/UserContext'
 import useApi from '../utils/useApi'
+import Dialog from '../components/Dialog'
 
 // const dummy = [
 //         {
@@ -19,10 +20,11 @@ import useApi from '../utils/useApi'
 const CategoryPage = () => {
     const [categories, setCategories] = useState(null)
     const [active, setActive] = useState(null) //active category data to update
+    const [toDel, setToDel] = useState(null)
     const [state, setState] = useState()
     const token = userToken()
 
-    const { fetchCategories, createCategory, updateCategory } = useApi()
+    const { fetchCategories, createCategory, updateCategory, deleteCategory } = useApi()
 
     const handleChange = e => {
         if (active) {
@@ -73,7 +75,7 @@ const CategoryPage = () => {
                     {item.products?.map(product => <div>{product}</div>)}
                     <div>
                         <button onClick={() => setActive(item)}>update</button>
-                        <button>delete</button>
+                        <button onClick={() => setToDel(item)}>delete</button>
                     </div>
                 </div>)}
             </div>
@@ -95,6 +97,7 @@ const CategoryPage = () => {
                 </div>
                 <div><button>{active ? "Update" : "Save"}</button></div>
             </form>
+            {toDel && <Dialog close={setToDel} operation={() => deleteCategory(toDel._id, token)}/>}
         </div>
     )
 }

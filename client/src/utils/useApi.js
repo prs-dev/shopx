@@ -34,10 +34,24 @@ const useApi = () => {
             console.log(data)
         }
     }
+    const deleteCategory = async (id, token) => {
+        const res = await fetch(`/api/admin/category/delete/${id}`, {
+            method: "delete",
+            headers: {
+                "content-type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        if(res.ok) {
+            const data = await res.json()
+            console.log(data)
+        }
+    }
     return {
         fetchCategories,
         createCategory,
-        updateCategory
+        updateCategory,
+        deleteCategory
     }
 }
 
