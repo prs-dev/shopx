@@ -16,6 +16,9 @@ current features:
         * product schema created 
         * products can be created, updated and deleted from their respective vendor
         * admin can see and perform operations on products as well
+    *categories:
+        * admin can make, update and delete categories
+        * vendor can add new products with categories of their choice
     * admin:
         * admin can see vendor requests and filter by type using query based search `type=pending/rejected`
 
@@ -24,8 +27,9 @@ current features:
     * new vendor can send join request from navbar using `Become a vendor button`
     * logged in user can either be vendor, user or admin, dashboard and sidebar only visible to vendor or admin, but user can see profile page
     * a custom dialog to approve/reject vendor requests
+    * user can see all products and filter the products based on categories
 
-week three complete -- vendor system complete
+week five complete -- categories and inventory complete
 
 Screenshots:
 updated:
